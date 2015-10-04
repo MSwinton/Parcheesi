@@ -28,14 +28,7 @@ import Space;
 public class Board{
     
     //Class Variables
-    Space redStart;
-    Space greenStart;
-    Space yellowStart;
-    Space blueStart;
-    Space redEntrance;
-    Space greenEntrance;
-    Space yellowEntrance;
-    Space blueEntrance;
+    Space[] board;
 
     Space[] board;    //Holds all spaces, including start/home.  Order: Starting>outter>Inner>Home, always in RGYB order.
 
@@ -43,17 +36,13 @@ public class Board{
     public void Board( ){
 
     	//Initialize BoardStoared (main array).
-	board = new Space[101];
+	this.board = new Space[101];
     	
 	//Create the home areas
-	redStart = new Space("start");
-	greenStart = new Space("start");
-	yellowStart = new Space("start");
-	blueStart = new Space("start");
-	redStart = board[0];
-	greenStart = board[1];
-	yellowStart = board[2];
-	blueStart = board[3];
+	board[0] = new Space("start");
+	board[1] = new Space("start");
+	board[2] = new Space("start");
+	board[3] = new Space("start");
 
 
 	//Create the outside spaces (I'll make the Space class later btw)
