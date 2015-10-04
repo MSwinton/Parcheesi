@@ -27,7 +27,7 @@ import Space;
 
 public class Board{
     
-    #Class Variables
+    //Class Variables
     Space redStart;
     Space greenStart;
     Space yellowStart;
@@ -37,15 +37,15 @@ public class Board{
     Space yellowEntrance;
     Space blueEntrance;
 
-    Space[] board;    #Holds all spaces, including start/home.  Order: Starting>outter>Inner>Home, always in RGYB order.
+    Space[] board;    //Holds all spaces, including start/home.  Order: Starting>outter>Inner>Home, always in RGYB order.
 
-    #Innit method.  Can you tell I'm rusty yet?  (still working in Vim)
+    //Innit method.  Can you tell I'm rusty yet?  (still working in Vim)
     public void Board( ){
 
-    	#Initialize BoardStoared (main array).
+    	//Initialize BoardStoared (main array).
 	board = new Space[101];
     	
-	#Create the home areas
+	//Create the home areas
 	redStart = new Space("start");
 	greenStart = new Space("start");
 	yellowStart = new Space("start");
@@ -56,7 +56,7 @@ public class Board{
 	blueStart = board[3];
 
 
-	#Create the outside spaces (I'll make the Space class later btw)
+	//Create the outside spaces (I'll make the Space class later btw)
 	board[4] = new Space("outter");
 	for( int index = 5; index < 72; index++ ){
 	    board[index] = new Space("outter");
@@ -65,13 +65,57 @@ public class Board{
 	}
 	board[71].addNext(board[4]);
 	board[4].addPrev(board[71]);
+
+	//Make safe spaces
 	for( int quad = 0; quad < 4; quad++ ){
 	   board[4 + 7 + 18*quad].makeSafe();
 	   board[4 + 12 + 18*quad].makeSafe();
 	}
 	board[4].makeSafe("red");
-	board[22].makeSafe("green");
-	#18
+	board[21].makeSafe("green");
+	board[38].makeSafe("yellow");
+	board[55].makeSafe("blue");
+	
+	//Create the runway spaces.
+	//Red
+	Space prevSpace = board[67];
+	for( int index = 72; index < 79; index++ ){
+		board[index] = new Space("runway_red");
+		board[index].addPrev(prevSpace);
+		prevSpace.addNext(board[index]);
+		prevSpace = board[index];
+	}
+	//Green
+	Space prevSpace = board[16];
+	for( int index = 80; index < 86; index++ ){
+		board[index] = new Space("runway_green");
+		board[index].addPrev(prevSpace);
+		prevSpace.addNext(board[index]);
+		prevSpace = board[index];
+	}
+	//Yellow
+	Space prevSpace = board[33];
+	for( int index = 86; index < 93; index++ ){
+		board[index] = new Space("runway_yellow");
+		board[index].addPrev(prevSpace);
+		prevSpace.addNext(board[index]);
+		prevSpace = board[index];
+	}
+	//Blue
+	Space prevSpace = board[50];
+	for( int index = 93; index < 100; index++ ){
+		board[index] = new Space("runway_blue");
+		board[index].addPrev(prevSpace);
+		prevSpace.addNext(board[index]);
+		prevSpace = board[index];
+	}
+
+	//Create Home & connections (home does not have previous since you can't go back from Home.
+	board[100] = new Space("home");
+	board[78].addNext(board[100]);
+	board[85].addNext(board[100]);
+	board[92].addNext(board[100]);
+	board[99].addNext(board[100]);
 
  
     
